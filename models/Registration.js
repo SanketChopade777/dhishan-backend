@@ -1,4 +1,7 @@
 const mongoose = require("mongoose");
+const {
+  TrustProductsEntityAssignmentsInstance,
+} = require("twilio/lib/rest/trusthub/v1/trustProducts/trustProductsEntityAssignments");
 
 const RegistrationSchema = new mongoose.Schema({
   ticketNumber: {
@@ -56,11 +59,11 @@ const RegistrationSchema = new mongoose.Schema({
   },
   emailSent: {
     type: Boolean,
-    default: false,
+    default: true,
   },
   smsSent: {
     type: Boolean,
-    default: false,
+    default: true,
   },
 });
 
