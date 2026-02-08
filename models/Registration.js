@@ -1,21 +1,23 @@
 const mongoose = require("mongoose");
+const {
+  TrustProductsEntityAssignmentsInstance,
+} = require("twilio/lib/rest/trusthub/v1/trustProducts/trustProductsEntityAssignments");
 
 const RegistrationSchema = new mongoose.Schema({
   ticketNumber: {
     type: String,
     unique: true,
+    // required: true,
   },
   studentName: {
     type: String,
     required: [true, "Please add student name"],
-    trim: true,
   },
   rollNo: {
     type: String,
     required: [true, "Please add roll number"],
     unique: true,
     uppercase: true,
-    trim: true,
   },
   branch: {
     type: String,
@@ -36,13 +38,11 @@ const RegistrationSchema = new mongoose.Schema({
       },
       message: "Please enter a valid 10-digit mobile number",
     },
-    trim: true,
   },
   email: {
     type: String,
     required: [true, "Please add email"],
     lowercase: true,
-    trim: true,
     match: [
       /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
       "Please add a valid email",
@@ -67,22 +67,12 @@ const RegistrationSchema = new mongoose.Schema({
   },
 });
 
-// FAST ticket generation - NO database query
+// Generate ticket number before saving
 RegistrationSchema.pre("save", async function (next) {
   if (!this.ticketNumber) {
-    // Generate from timestamp (fast, no DB query)
-    const timestamp = Date.now().toString().slice(-6);
-    const random = Math.floor(Math.random() * 1000)
-      .toString()
-      .padStart(3, "0");
-    this.ticketNumber = `DIS26${timestamp}${random}`;
+    const count = await mongoose.model("Registration").countDocuments();
+    this.ticketNumber = `DIS26${String(count + 1).padStart(4, "0")}`;
   }
-  next(); // DON'T FORGET THIS!
 });
-
-// Create indexes for faster queries
-RegistrationSchema.index({ rollNo: 1 });
-RegistrationSchema.index({ email: 1 });
-RegistrationSchema.index({ registrationTime: -1 });
 
 module.exports = mongoose.model("Registration", RegistrationSchema);

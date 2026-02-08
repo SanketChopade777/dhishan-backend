@@ -38,9 +38,8 @@ app.use(
 app.get("/health", (req, res) => {
   res.status(200).json({
     status: "healthy",
-    service: "Dhishan API",
     timestamp: new Date().toISOString(),
-    uptime: process.uptime(),
+    service: "Dhishan 26 API",
   });
 });
 
