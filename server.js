@@ -21,10 +21,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(
   cors({
     origin: [
+      "https://dhishan-frontend.vercel.app",
+      "https://dhishan-backend.onrender.com/",
       "http://localhost:5173",
       "http://localhost:3000",
-      "https://dhishan26.vercel.app",
-      "https://dhishan-gcek.vercel.app",
+
       /\.vercel\.app$/, // Allow all Vercel deployments
     ],
     credentials: true,

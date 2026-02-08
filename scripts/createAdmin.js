@@ -15,8 +15,8 @@ const createAdmin = async () => {
     }
 
     const admin = new Admin({
-      username: "uremail",
-      password: "urpass", // plain text here
+      username: "admin@dhishan.com",
+      password: "Dishan@2026", // plain text here
     });
 
     await admin.save();
