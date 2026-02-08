@@ -2,16 +2,15 @@ services:
   - type: web
     name: dhishan-backend
     env: node
-    region: singapore # or singapore if you're in India
+    region: oregon
     plan: free
     buildCommand: npm install
-    startCommand: node server.js
+    startCommand: npm start
     healthCheckPath: /health
-    autoDeploy: true
     envVars:
       - key: NODE_ENV
         value: production
       - key: PORT
         value: 10000
       - key: JWT_SECRET
-        sync: false
+        generateValue: true
