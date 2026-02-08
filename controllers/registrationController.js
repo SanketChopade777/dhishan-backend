@@ -51,7 +51,7 @@ const registerForEvent = async (req, res) => {
     const registration = await Registration.create(req.body);
 
     // Generate PDF ticket
-    const pdfBuffer = await generateTicket(registration);
+    // const pdfBuffer = await generateTicket(registration);
 
     // Send email with PDF attachment
     const mailOptions = {
@@ -95,24 +95,24 @@ const registerForEvent = async (req, res) => {
           </p>
         </div>
       `,
-      attachments: [
-        {
-          filename: `Dhishan26_Ticket_${registration.ticketNumber}.pdf`,
-          content: pdfBuffer,
-          contentType: "application/pdf",
-        },
-      ],
+      //   attachments: [
+      //     {
+      //       filename: `Dhishan26_Ticket_${registration.ticketNumber}.pdf`,
+      //       content: pdfBuffer,
+      //       contentType: "application/pdf",
+      //     },
+      //   ],
     };
 
-    // Send SMS
-    const smsSent = await sendRegistrationSMS(
-      registration.mobile,
-      registration.studentName,
-      registration.ticketNumber,
-    );
+    // // Send SMS
+    // const smsSent = await sendRegistrationSMS(
+    //   registration.mobile,
+    //   registration.studentName,
+    //   registration.ticketNumber,
+    // );
 
-    // Update registration record
-    registration.smsSent = smsSent;
+    // // Update registration record
+    // registration.smsSent = smsSent;
 
     // Try to send email
     try {
