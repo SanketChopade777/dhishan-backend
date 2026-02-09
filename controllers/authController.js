@@ -97,7 +97,7 @@ const getDashboardData = async (req, res) => {
       todayRegistrations,
       branchStats,
       yearStats,
-      availableSeats: Math.max(0, 1500 - totalRegistrations),
+      availableSeats: Math.max(0, 1000 - totalRegistrations),
     });
   } catch (error) {
     res.status(500).json({ message: "Server error", error: error.message });

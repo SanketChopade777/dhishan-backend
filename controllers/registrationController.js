@@ -17,11 +17,11 @@ const transporter = nodemailer.createTransport({
 // @access  Public
 const registerForEvent = async (req, res) => {
   try {
-    // Check if 1500 seats are filled
+    // Check if 1000 seats are filled
     const registeredCount = await Registration.countDocuments();
-    if (registeredCount >= 1500) {
+    if (registeredCount >= 1000) {
       return res.status(400).json({
-        message: "Registration closed! All 1500 seats have been filled.",
+        message: "Registration closed! All 1000 seats have been filled.",
       });
     }
 
@@ -85,7 +85,7 @@ const registerForEvent = async (req, res) => {
     //           <li>This event is strictly for GCEK students only</li>
     //           <li>Carry your college ID card for verification</li>
     //           <li>Free refreshments will be provided</li>
-    //           <li>Only 1500 seats available - first come, first served</li>
+    //           <li>Only 1000 seats available - first come, first served</li>
     //           <li>For any queries, contact: +91 836 998 5931</li>
     //         </ul>
     //       </div>
