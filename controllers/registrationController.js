@@ -53,82 +53,82 @@ const registerForEvent = async (req, res) => {
     // Generate PDF ticket
     // const pdfBuffer = await generateTicket(registration);
 
-    // Send email with PDF attachment
-    const mailOptions = {
-      from: process.env.EMAIL_USER,
-      to: registration.email,
-      subject: "Dhishan 26 - Registration Confirmation",
-      html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2 style="color: #0c4a6e;">🎉 Registration Successful!</h2>
-          <p>Dear ${registration.studentName},</p>
-          <p>Your registration for <strong>Dhishan 26</strong> has been confirmed!</p>
-          
-          <div style="background: #f0f9ff; padding: 20px; border-radius: 5px; margin: 20px 0;">
-            <h3 style="color: #075985;">Registration Details:</h3>
-            <p><strong>Ticket Number:</strong> ${registration.ticketNumber}</p>
-            <p><strong>Roll No:</strong> ${registration.rollNo}</p>
-            <p><strong>Branch:</strong> ${registration.branch}</p>
-            <p><strong>Year:</strong> ${registration.year}</p>
-          </div>
-          
-          <div style="background: #fffbeb; padding: 20px; border-radius: 5px; margin: 20px 0;">
-            <h3 style="color: #92400e;">Event Details:</h3>
-            <p><strong>Date:</strong> 15th February, 2026</p>
-            <p><strong>Time:</strong> 10:00 AM to 08:00 PM</p>
-            <p><strong>Venue:</strong> Open Theatre, GCEK</p>
-          </div>
-          
-          <div style="background: #fef2f2; padding: 20px; border-radius: 5px; margin: 20px 0;">
-            <h3 style="color: #7f1d1d;">Important Instructions:</h3>
-            <ul>
-              <li>This event is strictly for GCEK students only</li>
-              <li>Carry your college ID card for verification</li>
-              <li>Free refreshments will be provided</li>
-              <li>Only 1500 seats available - first come, first served</li>
-              <li>For any queries, contact: +91 836 998 5931</li>
-            </ul>
-          </div>
-          
-          <p style="color: #666; font-size: 12px;">
-            Note: Your ticket PDF is attached. Please carry a printed copy or show it on your mobile at entry.
-          </p>
-        </div>
-      `,
-      attachments: [
-        {
-          filename: `Dhishan26_Ticket_${registration.ticketNumber}.pdf`,
-          content: pdfBuffer,
-          contentType: "application/pdf",
-        },
-      ],
-    };
+    // // Send email with PDF attachment
+    // const mailOptions = {
+    //   from: process.env.EMAIL_USER,
+    //   to: registration.email,
+    //   subject: "Dhishan 26 - Registration Confirmation",
+    //   html: `
+    //     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+    //       <h2 style="color: #0c4a6e;">🎉 Registration Successful!</h2>
+    //       <p>Dear ${registration.studentName},</p>
+    //       <p>Your registration for <strong>Dhishan 26</strong> has been confirmed!</p>
 
-    // Send SMS
-    const smsSent = await sendRegistrationSMS(
-      registration.mobile,
-      registration.studentName,
-      registration.ticketNumber,
-    );
+    //       <div style="background: #f0f9ff; padding: 20px; border-radius: 5px; margin: 20px 0;">
+    //         <h3 style="color: #075985;">Registration Details:</h3>
+    //         <p><strong>Ticket Number:</strong> ${registration.ticketNumber}</p>
+    //         <p><strong>Roll No:</strong> ${registration.rollNo}</p>
+    //         <p><strong>Branch:</strong> ${registration.branch}</p>
+    //         <p><strong>Year:</strong> ${registration.year}</p>
+    //       </div>
 
-    // Update registration record
-    registration.smsSent = smsSent;
+    //       <div style="background: #fffbeb; padding: 20px; border-radius: 5px; margin: 20px 0;">
+    //         <h3 style="color: #92400e;">Event Details:</h3>
+    //         <p><strong>Date:</strong> 15th February, 2026</p>
+    //         <p><strong>Time:</strong> 10:00 AM to 08:00 PM</p>
+    //         <p><strong>Venue:</strong> Open Theatre, GCEK</p>
+    //       </div>
 
-    // Try to send email
-    try {
-      await transporter.sendMail(mailOptions);
-      registration.emailSent = true;
-      await registration.save();
-    } catch (emailError) {
-      console.error("Email error:", emailError);
-      registration.emailSent = false;
-      await registration.save();
-    }
+    //       <div style="background: #fef2f2; padding: 20px; border-radius: 5px; margin: 20px 0;">
+    //         <h3 style="color: #7f1d1d;">Important Instructions:</h3>
+    //         <ul>
+    //           <li>This event is strictly for GCEK students only</li>
+    //           <li>Carry your college ID card for verification</li>
+    //           <li>Free refreshments will be provided</li>
+    //           <li>Only 1500 seats available - first come, first served</li>
+    //           <li>For any queries, contact: +91 836 998 5931</li>
+    //         </ul>
+    //       </div>
+
+    //       <p style="color: #666; font-size: 12px;">
+    //         Note: Your ticket PDF is attached. Please carry a printed copy or show it on your mobile at entry.
+    //       </p>
+    //     </div>
+    //   `,
+    //   attachments: [
+    //     {
+    //       filename: `Dhishan26_Ticket_${registration.ticketNumber}.pdf`,
+    //       content: pdfBuffer,
+    //       contentType: "application/pdf",
+    //     },
+    //   ],
+    // };
+
+    // // Send SMS
+    // const smsSent = await sendRegistrationSMS(
+    //   registration.mobile,
+    //   registration.studentName,
+    //   registration.ticketNumber,
+    // );
+
+    // // Update registration record
+    // registration.smsSent = smsSent;
+
+    // // Try to send email
+    // try {
+    //   await transporter.sendMail(mailOptions);
+    //   registration.emailSent = true;
+    //   await registration.save();
+    // } catch (emailError) {
+    //   console.error("Email error:", emailError);
+    //   registration.emailSent = false;
+    //   await registration.save();
+    // }
 
     res.status(201).json({
       success: true,
       data: registration,
-      message: "Registration successful! Check your email for ticket.",
+      message: "Registration successful!",
     });
   } catch (error) {
     console.error(error);
