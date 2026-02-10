@@ -21,7 +21,7 @@ const RegistrationSchema = new mongoose.Schema({
   },
   branch: {
     type: String,
-    enum: ["IT", "MECH", "Ele", "ENTC", "Civil"],
+    enum: ["IT", "MECH", "ELE", "ENTC", "CIVIL", "M.TECH", "MCA"],
     required: [true, "Please select branch"],
   },
   year: {
