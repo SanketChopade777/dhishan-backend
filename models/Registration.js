@@ -73,7 +73,6 @@ RegistrationSchema.pre("save", function (next) {
     const uniquePart = this._id.toString().slice(-6).toUpperCase();
     this.ticketNumber = `DIS26${uniquePart}`;
   }
-  next();
 });
 
 module.exports = mongoose.model("Registration", RegistrationSchema);
