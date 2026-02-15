@@ -67,12 +67,13 @@ const RegistrationSchema = new mongoose.Schema({
   },
 });
 
-// Generate ticket number before saving
-RegistrationSchema.pre("save", async function (next) {
+// Generate ticket number safely before saving
+RegistrationSchema.pre("save", function (next) {
   if (!this.ticketNumber) {
-    const count = await mongoose.model("Registration").countDocuments();
-    this.ticketNumber = `DIS26${String(count + 1).padStart(4, "0")}`;
+    const uniquePart = this._id.toString().slice(-6).toUpperCase();
+    this.ticketNumber = `DIS26${uniquePart}`;
   }
+  next();
 });
 
 module.exports = mongoose.model("Registration", RegistrationSchema);
